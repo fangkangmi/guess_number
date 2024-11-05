@@ -4,22 +4,22 @@
 // 1. println! macro
 // 2. String type
 
-use std::io; 
-
+use std::io;  // prelude
+use rand::Rng; // trait
 
 fn main() {
     println!("Guess number game!");
 
-    // let foo = 1;
-    // let bar = foo; //immutable variable
-    // foo = 2; //error: cannot assign twice to immutable variable
+    let secret_number = rand::thread_rng().gen_range(1..101);
+
+    println!("The secret number is: {}", secret_number);
 
     // let is used to create a variable
     // mut is used to make the variable mutable
     // :: is used to call a function from a module
-    // :: is like static method in Java
     let mut guess: String = String::new(); 
 
+    // io:Result OK or Err
     io::stdin().read_line(&mut guess)
         .expect("Failed to read line"  );
 
