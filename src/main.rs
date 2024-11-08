@@ -18,27 +18,33 @@ fn main() {
     // rand::thread_rng() returns a random number generator instance
     // .gen_range(1..101) is a method call on that instance
 
-    // let is used to create a variable
-    // mut is used to make the variable mutable
-    // :: is used to call a function from a module
-    let mut guess: String = String::new(); 
+    loop{
+        // let is used to create a variable
+        // mut is used to make the variable mutable
+        // :: is used to call a function from a module
+        let mut guess: String = String::new(); 
 
-    // io:Result OK or Err
-    io::stdin().read_line(&mut guess)
-        .expect("Failed to read line"  );
+        // io:Result OK or Err
+        io::stdin().read_line(&mut guess)
+            .expect("Failed to read line"  );
 
-    // Rust allows shadowing
-    // Shadowing means that you can declare a new variable with the same name as a previous variable
-    // u32 is an unsigned 32-bit integer. Range: 0 to 4,294,967,295.
-    let guess: u32 = guess.trim().parse()
-        .expect("Please type a number!");
+        // Rust allows shadowing
+        // Shadowing means that you can declare a new variable with the same name as a previous variable
+        // u32 is an unsigned 32-bit integer. Range: 0 to 4,294,967,295.
+        let guess: u32 = match guess.trim().parse() {
+            Ok(num) => num,
+            Err(_) => continue,
+        };
 
-    println!("You guessed: {}", guess);
+        println!("You guessed: {}", guess);
 
-    // => is used to return a value
-    match guess.cmp(&secret_number) {
-        Ordering::Less => println!("Too small!"),
-        Ordering::Greater => println!("Too big!"),
-        Ordering::Equal => println!("You win!"),
-    }
+        // => is used to return a value
+        match guess.cmp(&secret_number) {
+            Ordering::Less => println!("Too small!"),
+            Ordering::Greater => println!("Too big!"),
+            Ordering::Equal => {
+                println!("You win!");
+                break;}
+        }
+    }   
 }
